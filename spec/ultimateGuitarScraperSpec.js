@@ -164,6 +164,13 @@ describe('ultimate-guitar-scraper', function() {
         expect(typeof tab.name).toBe('string');
         expect(typeof tab.type).toBe('string');
         expect(typeof tab.artist).toBe('string');
+        expect(typeof tab.artist).toBe('string');
+
+        expect(typeof tab.contentText).toBe('string');
+        expect(tab.contentText.trim().length).toBeGreaterThan(0);
+
+        expect(typeof tab.contentHTML).toBe('string');
+        expect(tab.contentHTML.trim().length).toBeGreaterThan(0);
         // Optional properties.
         expect(typeof tab.rating).not.toBe('undefined');
         expect(typeof tab.numberRates).not.toBe('undefined');
