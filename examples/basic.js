@@ -5,7 +5,7 @@ ugs.search({
   songName: 'Wish You Were Here',
   page: 1,
   type: ['tabs', 'chords', 'guitar pro tabs']
-}, function (error, tabs) {
+}, (error, tabs) => {
   if (error) {
     console.log(error)
   } else {

@@ -26,7 +26,7 @@ TABUrl = 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver
 // Power Tab
 // TABUrl = "https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm";
 
-ugs.get(TABUrl, function (error, tab) {
+ugs.get(TABUrl, (error, tab) => {
   if (error) {
     console.log(error)
   } else {
