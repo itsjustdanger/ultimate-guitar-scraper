@@ -196,19 +196,7 @@ Content attributes depend on the type.
 
 #### query
 
-Type: `Object`
-
-| Name   | Type   | Require               | Default    |
-|--------|--------|-----------------------|------------|
-| query  | string | yes                   |            |
-| artist | string | only if type is 'tab' |            |
-| type   | string | no                    | `'artist'` |
-
-
-Available types:
-- `'artist'`
-- `'tab'`
-
+Type: `String`
 
 #### callback
 
@@ -227,16 +215,12 @@ Type: `Object`
 Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
 
 
-### examples
-
-Searching for an `'artist'`.
+### example
 
 ```js
 var ugs = require('ultimate-guitar-scraper');
-ugs.autocomplete({
-  query: 'Ozzy',
-  type: 'artist'
-}, function(error, suggestions) {
+var query = 'Ozzy'
+ugs.autocomplete(query, function (error, suggestions) {
   if (error) {
     console.log(error);
   } else {
@@ -244,24 +228,6 @@ ugs.autocomplete({
   }
 });
 ```
-
-Searching for a `'song'`.
-
-```js
-var ugs = require('ultimate-guitar-scraper');
-ugs.autocomplete({
-  query: 'Crazy',
-  artist: 'Ozzy Osbourne',
-  type: 'tab'
-}, function(error, suggestions) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log(suggestions);
-  }
-});
-```
-
 
 ## test
 
