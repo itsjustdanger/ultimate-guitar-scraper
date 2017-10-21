@@ -96,13 +96,6 @@ describe('utils', function () {
       })
     })
   })
-
-  describe('formatAutocompleteQuery', function () {
-
-    // TODO implement this spec.
-    // ...
-
-  })
 })
 
 describe('ultimate-guitar-scraper', function () {
