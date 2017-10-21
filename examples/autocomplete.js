@@ -1,9 +1,7 @@
 var ugs = require('../lib/index');
 
-ugs.autocomplete({
-  query: 'Ozzy',
-  type: 'artist'
-}, function(error, suggestions) {
+var query = 'Ozzy'
+ugs.autocomplete(query, function (error, suggestions) {
   if (error) {
     console.log(error);
   } else {

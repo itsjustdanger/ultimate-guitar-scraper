@@ -202,12 +202,9 @@ describe('ultimate-guitar-scraper', function() {
   });
 
   describe("autocomplete", function () {
-    it("get suggestions for tab", function (done) {
-      var query = {
-        query: 'Crazy',
-        artist: 'Ozzy Osbourne',
-        type: 'tab'
-      };
+
+    it("get suggestions", function (done) {
+      var query = 'Ozzy'
       ugs.autocomplete(query, function(error, suggestions) {
         expect(error).toBeNull();
         expect(Array.isArray(suggestions)).toBe(true);
@@ -220,10 +217,7 @@ describe('ultimate-guitar-scraper', function() {
       var requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       };
-      var query = {
-        query: 'Ozzy',
-        type: 'artist'
-      };
+      var query = 'Crazy';
       ugs.autocomplete(query, function(error, suggestions, response, body) {
         expect(error).toBeNull();
         expect(Array.isArray(suggestions)).toBe(true);
