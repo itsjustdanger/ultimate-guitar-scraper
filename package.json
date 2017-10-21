@@ -16,7 +16,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "standard && jasmine"
   },
   "author": "Simon Thiboutôt <salut@simonthiboutot.com> (http://simonthiboutot.com)",
   "license": "MIT",
@@ -26,7 +26,8 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
-    "jasmine": "^2.5.3"
+    "jasmine": "^2.5.3",
+    "standard": "^10.0.3"
   },
   "repository": {
     "type": "git",

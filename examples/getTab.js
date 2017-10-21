@@ -1,9 +1,9 @@
-var ugs = require('../lib/index');
+var ugs = require('../lib/index')
 
-var TABUrl;
+var TABUrl
 
 // chords
-TABUrl = "https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm";
+TABUrl = 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm'
 
 // video
 // TABUrl = "https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_video_lesson.htm";
@@ -26,10 +26,10 @@ TABUrl = "https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver
 // Power Tab
 // TABUrl = "https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm";
 
-ugs.get(TABUrl, function(error, tab) {
+ugs.get(TABUrl, function (error, tab) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(tab);
+    console.log(tab)
   }
-});
+})

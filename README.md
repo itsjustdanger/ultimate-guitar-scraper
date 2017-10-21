@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/ultimate-guitar-scraper.svg)](https://badge.fury.io/js/ultimate-guitar-scraper)
 [![Dependency Status](https://gemnasium.com/masterT/ultimate-guitar-scraper.svg)](https://gemnasium.com/masterT/ultimate-guitar-scraper)
 [![TravisCI Status](https://travis-ci.org/masterT/ultimate-guitar-scraper.svg)](https://travis-ci.org/masterT/ultimate-guitar-scraper)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 > A scraper for http://www.ultimate-guitar.com
 
@@ -47,7 +48,7 @@ Available TAB types:
 
 Type: `Function (error, tabs, requestResponse, requestBody)`
 
-- **error**: the error message. `null` if no error.
+- **error**: Error object. `null` if no error.
 - **tabs**: array of TAB (see TAB structure below) `null` if error.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
@@ -136,7 +137,7 @@ The url of the TAB.
 
 Type: `Function(error, tab, requestResponse, requestBody)`
 
-- **error**: the error message. `null` if no error.
+- **error**: Error object. `null` if no error.
 - **tab**: the TAB (see TAB structure below) `null` if error.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
@@ -202,7 +203,7 @@ Type: `String`
 
 Type: `Function(error, suggestions, requestResponse, requestBody)`
 
-- **error**: the error message. `null` if no error.
+- **error**: Error object. `null` if no error.
 - **suggestions**: array of String that represent `'song'` or `'artist'`.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
