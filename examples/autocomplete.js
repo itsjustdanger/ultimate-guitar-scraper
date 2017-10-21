@@ -1,6 +1,6 @@
-var ugs = require('../lib/index')
+const ugs = require('../lib/index')
 
-var query = 'Ozzy'
+let query = 'Ozzy'
 ugs.autocomplete(query, function (error, suggestions) {
   if (error) {
     console.log(error)

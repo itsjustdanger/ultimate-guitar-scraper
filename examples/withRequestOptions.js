@@ -1,10 +1,10 @@
-var ugs = require('../lib/index')
+const ugs = require('../lib/index')
 
-var query = {
+let query = {
   bandName: 'Muse'
 }
 
-var callback = function (error, tabs, response, body) {
+function callback (error, tabs, response, body) {
   if (error) {
     console.log(error)
   } else {

@@ -1,4 +1,4 @@
-var ugs = require('../lib/index')
+const ugs = require('../lib/index')
 
 ugs.search({
   bandName: 'Pink Floyd',

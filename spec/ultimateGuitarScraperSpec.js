@@ -1,22 +1,22 @@
 /* eslint-env jasmine */
-var utils = require('../lib/utils')
-var ugs = require('../lib/index')
+const utils = require('../lib/utils')
+const ugs = require('../lib/index')
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
 
-var basicSearchQuery = function () {
+function basicSearchQuery () {
   return {
     bandName: 'Muse'
   }
 }
 
-var basicAutocompleteQuery = function () {
+function basicAutocompleteQuery () {
   return {
     query: 'Ozzy'
   }
 }
 
-var completeSearchQuery = function () {
+function completeSearchQuery () {
   return {
     bandName: 'Black Keys',
     songName: 'Little Black Submarines',
@@ -52,7 +52,7 @@ describe('utils', function () {
     })
 
     it('uses default params', function () {
-      var query = basicAutocompleteQuery()
+      let query = basicAutocompleteQuery()
       expect(utils.formatAutocompleteQuery(query)).toEqual({
         q: 'Ozzy',
         type: 'artist'
@@ -68,7 +68,7 @@ describe('utils', function () {
     })
 
     it('uses default params', function () {
-      var query = basicSearchQuery()
+      let query = basicSearchQuery()
       expect(utils.formatSearchQuery(query)).toEqual({
         band_name: 'Muse',
         type: [ 300, 200 ],
@@ -82,7 +82,7 @@ describe('utils', function () {
     })
 
     it('uses params', function () {
-      var query = completeSearchQuery()
+      let query = completeSearchQuery()
       expect(utils.formatSearchQuery(query)).toEqual({
         band_name: 'Black Keys',
         song_name: 'Little Black Submarines',
@@ -108,7 +108,7 @@ describe('utils', function () {
 describe('ultimate-guitar-scraper', function () {
   describe('search', function () {
     it('searches TABs', function (done) {
-      var query = basicSearchQuery()
+      let query = basicSearchQuery()
       ugs.search(query, function (error, results) {
         expect(error).toBeNull()
         expect(Array.isArray(results)).toBe(true)
@@ -118,8 +118,8 @@ describe('ultimate-guitar-scraper', function () {
     })
 
     it('searches TABs with request options', function (done) {
-      var query = completeSearchQuery()
-      var requestOptions = {
+      let query = completeSearchQuery()
+      let requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
       ugs.search(query, function (error, results, response, body) {
@@ -135,7 +135,7 @@ describe('ultimate-guitar-scraper', function () {
   })
 
   describe('get', function () {
-    var tabUrl
+    let tabUrl
 
     beforeEach(function () {
       tabUrl = 'https://tabs.ultimate-guitar.com/t/the_black_keys/little_black_submarines_ver2_tab.htm'
@@ -164,7 +164,7 @@ describe('ultimate-guitar-scraper', function () {
     })
 
     it('get the TAB with request options', function (done) {
-      var requestOptions = {
+      let requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
       ugs.get(tabUrl, function (error, tab, response, body) {
@@ -187,7 +187,7 @@ describe('ultimate-guitar-scraper', function () {
 
   describe('autocomplete', function () {
     it('get suggestions', function (done) {
-      var query = 'Ozzy'
+      let query = 'Ozzy'
       ugs.autocomplete(query, function (error, suggestions) {
         expect(error).toBeNull()
         expect(Array.isArray(suggestions)).toBe(true)
@@ -197,10 +197,10 @@ describe('ultimate-guitar-scraper', function () {
     })
 
     it('get suggestions for artist, with request options', function (done) {
-      var requestOptions = {
+      let requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
-      var query = 'Crazy'
+      let query = 'Crazy'
       ugs.autocomplete(query, function (error, suggestions, response, body) {
         expect(error).toBeNull()
         expect(Array.isArray(suggestions)).toBe(true)

@@ -1,6 +1,6 @@
-var ugs = require('../lib/index')
+const ugs = require('../lib/index')
 
-var TABUrl
+let TABUrl
 
 // chords
 TABUrl = 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm'
