@@ -47,7 +47,7 @@ Available TAB types:
 
 Type: `Function (error, tabs, requestResponse, requestBody)`
 
-- **error**: the error message. `null` if no error.
+- **error**: Error object. `null` if no error.
 - **tabs**: array of TAB (see TAB structure below) `null` if error.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
@@ -136,7 +136,7 @@ The url of the TAB.
 
 Type: `Function(error, tab, requestResponse, requestBody)`
 
-- **error**: the error message. `null` if no error.
+- **error**: Error object. `null` if no error.
 - **tab**: the TAB (see TAB structure below) `null` if error.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
@@ -202,7 +202,7 @@ Type: `String`
 
 Type: `Function(error, suggestions, requestResponse, requestBody)`
 
-- **error**: the error message. `null` if no error.
+- **error**: Error object. `null` if no error.
 - **suggestions**: array of String that represent `'song'` or `'artist'`.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
