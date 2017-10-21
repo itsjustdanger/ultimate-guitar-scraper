@@ -14,6 +14,12 @@ The scraper allow you to:
 - Get TAB from its url.
 - Get suggestions for artist or album.
 
+## requirements
+
+- nodejs `>= 6.5`
+- npm
+
+
 ## installation
 
 `npm i ultimate-guitar-scraper --save`
@@ -66,46 +72,47 @@ Options of the HTTP request, made with package [request](https://www.npmjs.com/p
 Basic usage.
 
 ```js
-var ugs = require('ultimate-guitar-scraper');
+const ugs = require('ultimate-guitar-scraper')
+
 ugs.search({
   bandName: 'Pink Floyd',
   songName: 'Wish You Were Here',
   page: 1,
-  type: ['tabs', 'chords', 'guitar pro tabs'],
-}, function(error, tabs) {
+  type: ['tabs', 'chords', 'guitar pro tabs']
+}, (error, tabs) => {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(tabs);
+    console.log(tabs)
   }
-});
+})
 ```
 
 Using [request](https://www.npmjs.com/package/request) options to pass a custom header.
 
 ```js
-var ugs = require('ultimate-guitar-scraper');
+const ugs = require('ultimate-guitar-scraper')
 
 var query = {
   bandName: 'Half Moon Run'
-};
+}
 
-var callback = function(error, tabs, response, body) {
+function callback (error, tabs, response, body) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(tabs);
-    console.log('Utlimate Guitar server: ' + response.headers['server']);
+    console.log(tabs)
+    console.log('Utlimate Guitar server: ' + response.headers['server'])
   }
-};
+}
 
 var options = {
   headers: {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'
   }
-};
+}
 
-ugs.search(query, callback, options);
+ugs.search(query, callback, options)
 ```
 
 ### tabs
@@ -153,14 +160,14 @@ Options of the HTTP request, made with package [request](https://www.npmjs.com/p
 Basic usage.
 
 ```js
-var tabUrl = "https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm";
-ugs.get(tabUrl, function(error, tab) {
+let tabUrl = 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm'
+ugs.get(tabUrl, (error, tab) => {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(tab);
+    console.log(tab)
   }
-});
+})
 ```
 
 #### tab
@@ -219,15 +226,15 @@ Options of the HTTP request, made with package [request](https://www.npmjs.com/p
 ### example
 
 ```js
-var ugs = require('ultimate-guitar-scraper');
+const ugs = require('ultimate-guitar-scraper')
 var query = 'Ozzy'
-ugs.autocomplete(query, function (error, suggestions) {
+ugs.autocomplete(query, (error, suggestions) => {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(suggestions);
+    console.log(suggestions)
   }
-});
+})
 ```
 
 ## test
