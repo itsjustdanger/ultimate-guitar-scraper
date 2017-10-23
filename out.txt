@@ -1,0 +1,11 @@
+
+> ultimate-guitar-scraper@0.3.3 test /Users/simon/Documents/programming/modules/ultimate-guitar-scraper
+> standard && jasmine
+
+Started
+.............
+
+
+13 specs, 0 failures
+Finished in 4.661 seconds
+
