@@ -154,40 +154,55 @@ describe('ultimate-guitar-scraper', () => {
 
         expect(response.statusCode).toBe(200)
         expect(typeof body).toBe('string')
+
         done()
       }, requestOptions)
     })
   })
 
-  describe('get', () => {
-    let tabUrl
+  const tabUrlByType = {
+    'video lessons': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_video_lesson.htm',
+    'tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_tab.htm',
+    'chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
+    'bass tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_btab.htm',
+    'guitar pro tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_guitar_pro.htm',
+    'power tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm',
+    'drum tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_drum_tab.htm',
+    'ukulele chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ukulele_crd.htm'
+  }
 
-    beforeEach(() => {
-      tabUrl = 'https://tabs.ultimate-guitar.com/t/the_black_keys/little_black_submarines_ver2_tab.htm'
-    })
+  Object.keys(tabUrlByType).forEach((type) => {
+    describe('get', () => {
+      const tabType = type
+      const tabUrl = tabUrlByType[type]
 
-    it('get the TAB', (done) => {
-      ugs.get(tabUrl, (error, tab) => {
-        expect(error).toBeNull()
-        expect(tab).toMatchJsonSchema('tab')
+      it('get the TAB', (done) => {
+        ugs.get(tabUrl, (error, tab) => {
+          expect(error).toBeNull()
 
-        done()
+          expect(tab).toMatchJsonSchema('tab')
+          expect(tab.type).toEqual(tabType)
+
+          done()
+        })
       })
-    })
 
-    it('get the TAB with request options', (done) => {
-      let requestOptions = {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
-      }
-      ugs.get(tabUrl, (error, tab, response, body) => {
-        expect(error).toBeNull()
-        expect(tab).toMatchJsonSchema('tab')
+      it('get the TAB with request options', (done) => {
+        let requestOptions = {
+          headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
+        }
+        ugs.get(tabUrl, (error, tab, response, body) => {
+          expect(error).toBeNull()
 
-        expect(response.statusCode).toBe(200)
-        expect(typeof body).toBe('string')
+          expect(tab).toMatchJsonSchema('tab')
+          expect(tab.type).toEqual(tabType)
 
-        done()
-      }, requestOptions)
+          expect(response.statusCode).toBe(200)
+          expect(typeof body).toBe('string')
+
+          done()
+        }, requestOptions)
+      })
     })
   })
 
@@ -196,8 +211,10 @@ describe('ultimate-guitar-scraper', () => {
       let query = 'Ozzy'
       ugs.autocomplete(query, (error, suggestions) => {
         expect(error).toBeNull()
+
         expect(suggestions.length).toBeGreaterThan(0)
         expect(suggestions).toMatchJsonSchema('suggestions')
+
         done()
       })
     })
@@ -215,6 +232,7 @@ describe('ultimate-guitar-scraper', () => {
 
         expect(response.statusCode).toBe(200)
         expect(typeof body).toBe('string')
+
         done()
       }, requestOptions)
     })
