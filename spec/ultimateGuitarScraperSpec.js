@@ -1,8 +1,18 @@
 /* eslint-env jasmine */
-const utils = require('../lib/utils')
 const ugs = require('../lib/index')
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
+
+const tabUrlByType = {
+  'video lessons': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_video_lesson.htm',
+  'tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_tab.htm',
+  'chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
+  'bass tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_btab.htm',
+  'guitar pro tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_guitar_pro.htm',
+  'power tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm',
+  'drum tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_drum_tab.htm',
+  'ukulele chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ukulele_crd.htm'
+}
 
 function basicSearchQuery () {
   return {
@@ -10,10 +20,8 @@ function basicSearchQuery () {
   }
 }
 
-function basicAutocompleteQuery () {
-  return {
-    query: 'Ozzy'
-  }
+function autocompleteQuery () {
+  return 'Ozzy'
 }
 
 function completeSearchQuery () {
@@ -24,79 +32,6 @@ function completeSearchQuery () {
     page: 1
   }
 }
-
-describe('utils', () => {
-  describe('formatAutocompleteSearchQuery', () => {
-    it('is invalid without param query', () => {
-      expect(() => {
-        utils.formatAutocompleteSearchQuery({})
-      }).toThrowError(Error)
-    })
-
-    it('is invalid with bad param type', () => {
-      expect(() => {
-        utils.formatAutocompleteSearchQuery({
-          query: 'Muse',
-          type: 'artisssssst'
-        })
-      }).toThrowError(Error)
-    })
-
-    it("is invalid without param 'artist' if param 'type' is 'tab'", () => {
-      expect(() => {
-        utils.formatAutocompleteSearchQuery({
-          query: 'New Born',
-          type: 'tab'
-        })
-      }).toThrowError(Error)
-    })
-
-    it('uses default params', () => {
-      let query = basicAutocompleteQuery()
-      expect(utils.formatAutocompleteQuery(query)).toEqual({
-        q: 'Ozzy',
-        type: 'artist'
-      })
-    })
-  })
-
-  describe('formatSearchQuery', () => {
-    it('is invalid without param bandName', () => {
-      expect(() => {
-        utils.formatSearchQuery({})
-      }).toThrowError(Error)
-    })
-
-    it('uses default params', () => {
-      let query = basicSearchQuery()
-      expect(utils.formatSearchQuery(query)).toEqual({
-        band_name: 'Muse',
-        type: [ 300, 200 ],
-        page: 1,
-        view_state: 'advanced',
-        tab_type_group: 'text',
-        app_name: 'ugt',
-        order: 'myweight',
-        version_la: ''
-      })
-    })
-
-    it('uses params', () => {
-      let query = completeSearchQuery()
-      expect(utils.formatSearchQuery(query)).toEqual({
-        band_name: 'Black Keys',
-        song_name: 'Little Black Submarines',
-        type: [ 100, 200, 300, 400, 500, 600, 700, 800 ],
-        page: 1,
-        view_state: 'advanced',
-        tab_type_group: 'text',
-        app_name: 'ugt',
-        order: 'myweight',
-        version_la: ''
-      })
-    })
-  })
-})
 
 describe('ultimate-guitar-scraper', () => {
   describe('search', () => {
@@ -130,17 +65,6 @@ describe('ultimate-guitar-scraper', () => {
       }, requestOptions)
     })
   })
-
-  const tabUrlByType = {
-    'video lessons': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_video_lesson.htm',
-    'tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_tab.htm',
-    'chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
-    'bass tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_btab.htm',
-    'guitar pro tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_guitar_pro.htm',
-    'power tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm',
-    'drum tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_drum_tab.htm',
-    'ukulele chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ukulele_crd.htm'
-  }
 
   Object.keys(tabUrlByType).forEach((type) => {
     describe('get', () => {
@@ -179,7 +103,7 @@ describe('ultimate-guitar-scraper', () => {
 
   describe('autocomplete', () => {
     it('get suggestions', (done) => {
-      let query = 'Ozzy'
+      let query = autocompleteQuery()
       ugs.autocomplete(query, (error, suggestions) => {
         expect(error).toBeNull()
 
@@ -194,7 +118,7 @@ describe('ultimate-guitar-scraper', () => {
       let requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
-      let query = 'Crazy'
+      let query = autocompleteQuery()
       ugs.autocomplete(query, (error, suggestions, response, body) => {
         expect(error).toBeNull()
 
