@@ -9,7 +9,7 @@
 
 > Rock and roll! 🎸 🎶 🤘🏻
 
-The scraper allow you to:
+The scraper allows you to:
 - Search TAB by song name and band name.
 - Get TAB from its url.
 - Get suggestions for artist or album.
@@ -55,7 +55,7 @@ Available TAB types:
 Type: `Function (error, tabs, requestResponse, requestBody)`
 
 - **error**: Error object. `null` if no error.
-- **tabs**: array of TAB (see TAB structure below) `null` if error.
+- **tabs**: an array of TAB (see TAB structure below) `null` if error.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
 
@@ -117,18 +117,23 @@ ugs.search(query, callback, options)
 
 ### tabs
 
-An `Array` of TAB object that looks like this:
+Matches JSON schemas [tabs.json](spec/support/schemas/tabs.json).
+
+Example:
 
 ```js
-{
-  artist: 'Pink Floyd',
-  name: 'Wish You Were Here Live',
-  difficulty: 'intermediate',       // can be null
-  rating: 5,                        // can be null
-  numberRates: 2,                   // can be null
-  type: 'tab'
-  url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
-}
+[
+  {
+    artist: 'Pink Floyd',
+    name: 'Wish You Were Here Live',
+    difficulty: 'intermediate',
+    rating: 5,
+    numberRates: 2,
+    type: 'tab',
+    url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
+  },
+  /* ... */
+]
 ```
 
 
@@ -155,11 +160,13 @@ Type: `Object`
 
 Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
 
-#### exemple
+#### example
 
 Basic usage.
 
 ```js
+const ugs = require('ultimate-guitar-scraper')
+
 let tabUrl = 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm'
 ugs.get(tabUrl, (error, tab) => {
   if (error) {
@@ -172,31 +179,37 @@ ugs.get(tabUrl, (error, tab) => {
 
 #### tab
 
+Matches JSON schemas [tab.json](spec/support/schemas/tab.json).
+
+Example:
+
 ```js
 {
+  url: 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
   name: 'Smells Like Teen Spirit',
   type: 'chords',
   artist: 'Nirvana',
   rating: 4,
-  numberRates: 28,
-  difficulty: null,
-  contentText: '[Intro]\n\nFsus2  Bbsus2  Ab  Db (x4)\n\n\n[Verse Intro]\n\nFsus2  Bbsus2  Ab  Db (x2)\n\n\n...',
-  contentHTML: '[Intro]\n\n<span>Fsus2</span>  <span>Bbsus2</span>  <span>Ab</span>  <span>Db</span> (x4)\n\n\n[Verse Intro]\n\n<span>Fsus2</span>  <span>Bbsus2...'
+  numberRates: 33,
+  content: {
+    text: '[Intro]\n\nFsus2  Bbsus2  Ab  Db', /* ... */
+    html: '[Intro]\n\n<span>Fsus2</span>  <span>Bbsus2</span>  <span>Ab</span>  <span>Db</span>' /* ... */
+  }
 }
 ```
 
-Content attributes depend on the type.
+Property `content` depends on the property `type`.
 
-| Type             | Content attributes                  |
-|------------------|-------------------------------------|
-| `tabs`           | `contentText`, `contentHTML`        |
-| `chords`         | `contentText`, `contentHTML`        |
-| `ukulele chords` | `contentText`, `contentHTML`        |
-| `drum tabs`      | `contentText`, `contentHTML`        |
-| `bass tabs`      | `contentText`, `contentHTML`        |
-| `guitar pro tabs`| `downloadUrl`                       |
-| `power tabs`     | `downloadUrl`                       |
-| `video lessons`  | `contentUrl`                        |
+| Property `type`    | Property `content`                  |
+|--------------------|-------------------------------------|
+| `tabs`             | `{ text: String, html: String}`     |
+| `chords`           | `{ text: String, html: String}`     |
+| `ukulele chords`   | `{ text: String, html: String}`     |
+| `drum tabs`        | `{ text: String, html: String}`     |
+| `bass tabs`        | `{ text: String, html: String}`     |
+| `guitar pro tabs`  | `{ url: String }`                   |
+| `power tabs`       | `{ url: String }`                   |
+| `video lessons`    | `{ url: String }`                   |
 
 
 
@@ -211,7 +224,7 @@ Type: `String`
 Type: `Function(error, suggestions, requestResponse, requestBody)`
 
 - **error**: Error object. `null` if no error.
-- **suggestions**: array of String that represent `'song'` or `'artist'`.
+- **suggestions**: an array of String that represent `'song'` or `'artist'`.
 - **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
 - **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
 
@@ -227,6 +240,7 @@ Options of the HTTP request, made with package [request](https://www.npmjs.com/p
 
 ```js
 const ugs = require('ultimate-guitar-scraper')
+
 var query = 'Ozzy'
 ugs.autocomplete(query, (error, suggestions) => {
   if (error) {
@@ -235,6 +249,28 @@ ugs.autocomplete(query, (error, suggestions) => {
     console.log(suggestions)
   }
 })
+```
+
+### suggestions
+
+Matches JSON schemas [suggestions.json](spec/support/schemas/suggestions.json).
+
+Example:
+
+
+```js
+[
+  'ozzy osbourne',
+  'ozzy',
+  'ozzy osbourne crazy train live',
+  'ozzy osbourne dreamer',
+  'ozzy osbourne no more tears',
+  'ozzy osbourne mama im coming home',
+  'ozzy osbourne goodbye to romance',
+  'ozzy osbourne shot in the dark',
+  'ozzy osbourn',
+  'ozzy osbourne perry mason'
+]
 ```
 
 ## test

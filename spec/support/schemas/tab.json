@@ -1,0 +1,66 @@
+{
+  "title" : "tabs",
+  "type": "object",
+  "properties": {
+    "artist": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "video lessons",
+        "tabs",
+        "chords",
+        "bass tabs",
+        "guitar pro tabs",
+        "power tabs",
+        "drum tabs",
+        "ukulele chords"
+      ]
+    },
+    "rating": {
+      "type": "number"
+    },
+    "numberRates": {
+      "type": "integer"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "novice",
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "content": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "html": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string", "format": "uri" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "artist", "name", "type", "url"
+  ]
+}

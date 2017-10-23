@@ -1,8 +1,8 @@
 {
   "name": "ultimate-guitar-scraper",
   "version": "0.3.3",
-  "engines" : {
-    "node" : ">=6.5" 
+  "engines": {
+    "node": ">=6.5"
   },
   "description": "A scraper for http://www.ultimate-guitar.com",
   "keywords": [
@@ -29,6 +29,7 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
+    "ajv": "^5.2.3",
     "jasmine": "^2.5.3",
     "standard": "^10.0.3"
   },

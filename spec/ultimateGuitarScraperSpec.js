@@ -1,8 +1,18 @@
 /* eslint-env jasmine */
-const utils = require('../lib/utils')
 const ugs = require('../lib/index')
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
+
+const tabUrlByType = {
+  'video lessons': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_video_lesson.htm',
+  'tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_tab.htm',
+  'chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
+  'bass tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_btab.htm',
+  'guitar pro tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_guitar_pro.htm',
+  'power tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm',
+  'drum tabs': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_drum_tab.htm',
+  'ukulele chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ukulele_crd.htm'
+}
 
 function basicSearchQuery () {
   return {
@@ -10,10 +20,8 @@ function basicSearchQuery () {
   }
 }
 
-function basicAutocompleteQuery () {
-  return {
-    query: 'Ozzy'
-  }
+function autocompleteQuery () {
+  return 'Ozzy'
 }
 
 function completeSearchQuery () {
@@ -25,87 +33,16 @@ function completeSearchQuery () {
   }
 }
 
-describe('utils', () => {
-  describe('formatAutocompleteSearchQuery', () => {
-    it('is invalid without param query', () => {
-      expect(() => {
-        utils.formatAutocompleteSearchQuery({})
-      }).toThrowError(Error)
-    })
-
-    it('is invalid with bad param type', () => {
-      expect(() => {
-        utils.formatAutocompleteSearchQuery({
-          query: 'Muse',
-          type: 'artisssssst'
-        })
-      }).toThrowError(Error)
-    })
-
-    it("is invalid without param 'artist' if param 'type' is 'tab'", () => {
-      expect(() => {
-        utils.formatAutocompleteSearchQuery({
-          query: 'New Born',
-          type: 'tab'
-        })
-      }).toThrowError(Error)
-    })
-
-    it('uses default params', () => {
-      let query = basicAutocompleteQuery()
-      expect(utils.formatAutocompleteQuery(query)).toEqual({
-        q: 'Ozzy',
-        type: 'artist'
-      })
-    })
-  })
-
-  describe('formatSearchQuery', () => {
-    it('is invalid without param bandName', () => {
-      expect(() => {
-        utils.formatSearchQuery({})
-      }).toThrowError(Error)
-    })
-
-    it('uses default params', () => {
-      let query = basicSearchQuery()
-      expect(utils.formatSearchQuery(query)).toEqual({
-        band_name: 'Muse',
-        type: [ 300, 200 ],
-        page: 1,
-        view_state: 'advanced',
-        tab_type_group: 'text',
-        app_name: 'ugt',
-        order: 'myweight',
-        version_la: ''
-      })
-    })
-
-    it('uses params', () => {
-      let query = completeSearchQuery()
-      expect(utils.formatSearchQuery(query)).toEqual({
-        band_name: 'Black Keys',
-        song_name: 'Little Black Submarines',
-        type: [ 100, 200, 300, 400, 500, 600, 700, 800 ],
-        page: 1,
-        view_state: 'advanced',
-        tab_type_group: 'text',
-        app_name: 'ugt',
-        order: 'myweight',
-        version_la: ''
-      })
-    })
-  })
-})
-
 describe('ultimate-guitar-scraper', () => {
   describe('search', () => {
     it('searches TABs', (done) => {
       let query = basicSearchQuery()
-      ugs.search(query, (error, results) => {
+      ugs.search(query, (error, tabs) => {
         expect(error).toBeNull()
-        expect(Array.isArray(results)).toBe(true)
-        expect(results.length).toBeGreaterThan(0)
+
+        expect(tabs.length).toBeGreaterThan(0)
+        expect(tabs).toMatchJsonSchema('tabs')
+
         done()
       })
     })
@@ -115,76 +52,64 @@ describe('ultimate-guitar-scraper', () => {
       let requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
-      ugs.search(query, (error, results, response, body) => {
+      ugs.search(query, (error, tabs, response, body) => {
         expect(error).toBeNull()
-        expect(Array.isArray(results)).toBe(true)
-        expect(results.length).toBeGreaterThan(0)
+
+        expect(tabs.length).toBeGreaterThan(0)
+        expect(tabs).toMatchJsonSchema('tabs')
 
         expect(response.statusCode).toBe(200)
         expect(typeof body).toBe('string')
+
         done()
       }, requestOptions)
     })
   })
 
-  describe('get', () => {
-    let tabUrl
+  Object.keys(tabUrlByType).forEach((type) => {
+    describe('get', () => {
+      const tabType = type
+      const tabUrl = tabUrlByType[type]
 
-    beforeEach(() => {
-      tabUrl = 'https://tabs.ultimate-guitar.com/t/the_black_keys/little_black_submarines_ver2_tab.htm'
-    })
+      it('get the TAB', (done) => {
+        ugs.get(tabUrl, (error, tab) => {
+          expect(error).toBeNull()
 
-    it('get the TAB', (done) => {
-      ugs.get(tabUrl, (error, tab) => {
-        expect(error).toBeNull()
-        expect(typeof tab).toBe('object')
-        expect(typeof tab.name).toBe('string')
-        expect(typeof tab.type).toBe('string')
-        expect(typeof tab.artist).toBe('string')
-        expect(typeof tab.artist).toBe('string')
+          expect(tab).toMatchJsonSchema('tab')
+          expect(tab.type).toEqual(tabType)
 
-        expect(typeof tab.contentText).toBe('string')
-        expect(tab.contentText.trim().length).toBeGreaterThan(0)
-
-        expect(typeof tab.contentHTML).toBe('string')
-        expect(tab.contentHTML.trim().length).toBeGreaterThan(0)
-        // Optional properties.
-        expect(typeof tab.rating).not.toBe('undefined')
-        expect(typeof tab.numberRates).not.toBe('undefined')
-        expect(typeof tab.difficulty).not.toBe('undefined')
-        done()
+          done()
+        })
       })
-    })
 
-    it('get the TAB with request options', (done) => {
-      let requestOptions = {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
-      }
-      ugs.get(tabUrl, (error, tab, response, body) => {
-        expect(error).toBeNull()
-        expect(typeof tab).toBe('object')
-        expect(typeof tab.name).toBe('string')
-        expect(typeof tab.type).toBe('string')
-        expect(typeof tab.artist).toBe('string')
-        // Optional properties.
-        expect(typeof tab.rating).not.toBe('undefined')
-        expect(typeof tab.numberRates).not.toBe('undefined')
-        expect(typeof tab.difficulty).not.toBe('undefined')
+      it('get the TAB with request options', (done) => {
+        let requestOptions = {
+          headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
+        }
+        ugs.get(tabUrl, (error, tab, response, body) => {
+          expect(error).toBeNull()
 
-        expect(response.statusCode).toBe(200)
-        expect(typeof body).toBe('string')
-        done()
-      }, requestOptions)
+          expect(tab).toMatchJsonSchema('tab')
+          expect(tab.type).toEqual(tabType)
+
+          expect(response.statusCode).toBe(200)
+          expect(typeof body).toBe('string')
+
+          done()
+        }, requestOptions)
+      })
     })
   })
 
   describe('autocomplete', () => {
     it('get suggestions', (done) => {
-      let query = 'Ozzy'
+      let query = autocompleteQuery()
       ugs.autocomplete(query, (error, suggestions) => {
         expect(error).toBeNull()
-        expect(Array.isArray(suggestions)).toBe(true)
+
         expect(suggestions.length).toBeGreaterThan(0)
+        expect(suggestions).toMatchJsonSchema('suggestions')
+
         done()
       })
     })
@@ -193,14 +118,16 @@ describe('ultimate-guitar-scraper', () => {
       let requestOptions = {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
-      let query = 'Crazy'
+      let query = autocompleteQuery()
       ugs.autocomplete(query, (error, suggestions, response, body) => {
         expect(error).toBeNull()
-        expect(Array.isArray(suggestions)).toBe(true)
+
         expect(suggestions.length).toBeGreaterThan(0)
+        expect(suggestions).toMatchJsonSchema('suggestions')
 
         expect(response.statusCode).toBe(200)
         expect(typeof body).toBe('string')
+
         done()
       }, requestOptions)
     })
