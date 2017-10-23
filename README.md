@@ -117,18 +117,23 @@ ugs.search(query, callback, options)
 
 ### tabs
 
-An `Array` of TAB object that looks like this:
+Matches JSON schemas [tabs.json](spec/support/schemas/tabs.json).
+
+Example:
 
 ```js
-{
-  artist: 'Pink Floyd',
-  name: 'Wish You Were Here Live',
-  difficulty: 'intermediate',       // can be null
-  rating: 5,                        // can be null
-  numberRates: 2,                   // can be null
-  type: 'tab'
-  url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
-}
+[
+  {
+    artist: 'Pink Floyd',
+    name: 'Wish You Were Here Live',
+    difficulty: 'intermediate',
+    rating: 5,
+    numberRates: 2,
+    type: 'tab',
+    url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
+  },
+  /* ... */
+]
 ```
 
 
@@ -172,6 +177,10 @@ ugs.get(tabUrl, (error, tab) => {
 
 #### tab
 
+Matches JSON schemas [tab.json](spec/support/schemas/tab.json).
+
+Example:
+
 ```js
 {
   name: 'Smells Like Teen Spirit',
@@ -179,9 +188,11 @@ ugs.get(tabUrl, (error, tab) => {
   artist: 'Nirvana',
   rating: 4,
   numberRates: 28,
-  difficulty: null,
-  contentText: '[Intro]\n\nFsus2  Bbsus2  Ab  Db (x4)\n\n\n[Verse Intro]\n\nFsus2  Bbsus2  Ab  Db (x2)\n\n\n...',
-  contentHTML: '[Intro]\n\n<span>Fsus2</span>  <span>Bbsus2</span>  <span>Ab</span>  <span>Db</span> (x4)\n\n\n[Verse Intro]\n\n<span>Fsus2</span>  <span>Bbsus2...'
+  difficulty: 'novice',
+  content: {
+    text: '[Intro]\n\nFsus2  Bbsus2  Ab  Db (x4)\n\n\n[Verse Intro]\n\nFsus2  Bbsus2  Ab  Db (x2)\n\n\n...',
+    html: '[Intro]\n\n<span>Fsus2</span>  <span>Bbsus2</span>  <span>Ab</span>  <span>Db</span> (x4)\n\n\n[Verse Intro]\n\n<span>Fsus2</span>  <span>Bbsus2...'
+  }
 }
 ```
 
