@@ -1,5 +1,9 @@
 /* eslint-env jasmine */
+const request = require('request')
 const ugs = require('../lib/index')
+const TYPES_WITH_URL = [
+  'guitar pro tabs', 'video lessons', 'power tabs'
+]
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
 
@@ -78,7 +82,17 @@ describe('ultimate-guitar-scraper', () => {
           expect(tab).toMatchJsonSchema('tab')
           expect(tab.type).toEqual(tabType)
 
-          done()
+          // Require property content.url to be available.
+          if (TYPES_WITH_URL.includes(tabType)) {
+            request(tab.content.url, (error, response, body) => {
+              expect(error).toBeNull()
+              expect(response.statusCode).toBeGreaterThanOrEqual(200)
+              expect(response.statusCode).toBeLessThan(300)
+              done()
+            })
+          } else {
+            done()
+          }
         })
       })
 
