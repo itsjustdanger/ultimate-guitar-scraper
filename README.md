@@ -10,7 +10,7 @@
 > Rock and roll! 🎸 🎶 🤘🏻
 
 The scraper allows you to:
-- Search TAB by keuword.
+- Search TAB by keyword.
 - Search TAB by song name and band name.
 - Get TAB from its url.
 - Get suggestions for artist or album.
