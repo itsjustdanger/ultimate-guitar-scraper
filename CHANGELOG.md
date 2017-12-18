@@ -1,4 +1,4 @@
-#### 0.5.0 (2017-10-23)
+#### 0.5.0 (2017-12-18)
 
 - rename `search` for `advanceSearch`
 - create `search` that takes
