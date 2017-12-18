@@ -1,7 +1,8 @@
 const ugs = require('../lib/index')
 
-ugs.search({
-  query: 'Wish You Were Here',
+ugs.advanceSearch({
+  bandName: 'Pink Floyd',
+  songName: 'Wish You Were Here',
   page: 1,
   type: ['tabs', 'chords', 'guitar pro tabs']
 }, (error, tabs) => {

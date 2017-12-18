@@ -35,6 +35,113 @@ Type: `Object`
 
 | Name     | Type            | Require | Default              |
 |----------|-----------------|---------|----------------------|
+| query    | string          | yes     |                      |
+| page     | number          | no      | `1`                  |
+| type     | string or array | no      | `['tabs', 'chords']` |
+
+Available TAB types:
+- `'video lessons'`
+- `'tabs'`
+- `'chords'`
+- `'bass tabs'`
+- `'guitar pro tabs'`
+- `'power tabs'`
+- `'drum tabs'`
+- `'ukulele chords'`
+
+#### callback
+
+Type: `Function (error, tabs, requestResponse, requestBody)`
+
+- **error**: Error object. `null` if no error.
+- **tabs**: an array of TAB (see TAB structure below) `null` if error.
+- **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
+- **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
+
+
+#### requestOptions
+
+Type: `Object`
+
+Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
+
+
+### examples
+
+Basic usage.
+
+```js
+const ugs = require('ultimate-guitar-scraper')
+
+ugs.search({
+  query: 'Wish You Were Here',
+  page: 1,
+  type: ['tabs', 'chords', 'guitar pro tabs']
+}, (error, tabs) => {
+  if (error) {
+    console.log(error)
+  } else {
+    console.log(tabs)
+  }
+})
+```
+
+Using [request](https://www.npmjs.com/package/request) options to pass a custom header.
+
+```js
+const ugs = require('ultimate-guitar-scraper')
+
+var query = {
+  query: 'Cooking Up Something Good'
+}
+
+function callback (error, tabs, response, body) {
+  if (error) {
+    console.log(error)
+  } else {
+    console.log(tabs)
+    console.log('Utlimate Guitar server: ' + response.headers['server'])
+  }
+}
+
+var options = {
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'
+  }
+}
+
+ugs.search(query, callback, options)
+```
+
+### tabs
+
+Matches JSON schemas [tabs.json](spec/support/schemas/tabs.json).
+
+Example:
+
+```js
+[
+  {
+    artist: 'Pink Floyd',
+    name: 'Wish You Were Here Live',
+    difficulty: 'intermediate',
+    rating: 5,
+    numberRates: 2,
+    type: 'tab',
+    url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
+  },
+  /* ... */
+]
+```
+
+### `advanceSearch(query, callback [, requestOptions])`
+
+#### query
+
+Type: `Object`
+
+| Name     | Type            | Require | Default              |
+|----------|-----------------|---------|----------------------|
 | bandName | string          | yes     |                      |
 | songName | string          | no      |                      |
 | page     | number          | no      | `1`                  |
@@ -74,7 +181,7 @@ Basic usage.
 ```js
 const ugs = require('ultimate-guitar-scraper')
 
-ugs.search({
+ugs.advanceSearch({
   bandName: 'Pink Floyd',
   songName: 'Wish You Were Here',
   page: 1,
@@ -112,7 +219,7 @@ var options = {
   }
 }
 
-ugs.search(query, callback, options)
+ugs.advanceSearch(query, callback, options)
 ```
 
 ### tabs
@@ -180,37 +287,6 @@ ugs.get(tabUrl, (error, tab) => {
 #### tab
 
 Matches JSON schemas [tab.json](spec/support/schemas/tab.json).
-
-Example:
-
-```js
-{
-  url: 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
-  name: 'Smells Like Teen Spirit',
-  type: 'chords',
-  artist: 'Nirvana',
-  rating: 4,
-  numberRates: 33,
-  content: {
-    text: '[Intro]\n\nFsus2  Bbsus2  Ab  Db', /* ... */
-    html: '[Intro]\n\n<span>Fsus2</span>  <span>Bbsus2</span>  <span>Ab</span>  <span>Db</span>' /* ... */
-  }
-}
-```
-
-Property `content` depends on the property `type`.
-
-| Property `type`    | Property `content`                  |
-|--------------------|-------------------------------------|
-| `tabs`             | `{ text: String, html: String}`     |
-| `chords`           | `{ text: String, html: String}`     |
-| `ukulele chords`   | `{ text: String, html: String}`     |
-| `drum tabs`        | `{ text: String, html: String}`     |
-| `bass tabs`        | `{ text: String, html: String}`     |
-| `guitar pro tabs`  | `{ url: String }`                   |
-| `power tabs`       | `{ url: String }`                   |
-| `video lessons`    | `{ url: String }`                   |
-
 
 
 ### `autocomplete(query, callback [, requestOptions])`

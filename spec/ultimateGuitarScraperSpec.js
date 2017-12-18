@@ -20,6 +20,12 @@ const tabUrlByType = {
 
 function basicSearchQuery () {
   return {
+    query: 'Muse'
+  }
+}
+
+function basicAdvanceSearchQuery () {
+  return {
     bandName: 'Muse'
   }
 }
@@ -29,6 +35,14 @@ function autocompleteQuery () {
 }
 
 function completeSearchQuery () {
+  return {
+    query: 'Little Black Submarines',
+    type: ['video lessons', 'tabs', 'chords', 'bass tabs', 'guitar pro tabs', 'power tabs', 'drum tabs', 'ukulele chords'],
+    page: 1
+  }
+}
+
+function completeAdvanceSearchQuery () {
   return {
     bandName: 'Black Keys',
     songName: 'Little Black Submarines',
@@ -57,6 +71,38 @@ describe('ultimate-guitar-scraper', () => {
         headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
       }
       ugs.search(query, (error, tabs, response, body) => {
+        expect(error).toBeNull()
+
+        expect(tabs.length).toBeGreaterThan(0)
+        expect(tabs).toMatchJsonSchema('tabs')
+
+        expect(response.statusCode).toBe(200)
+        expect(typeof body).toBe('string')
+
+        done()
+      }, requestOptions)
+    })
+  })
+
+  describe('advanceSearch', () => {
+    it('searches TABs', (done) => {
+      let query = basicAdvanceSearchQuery()
+      ugs.advanceSearch(query, (error, tabs) => {
+        expect(error).toBeNull()
+
+        expect(tabs.length).toBeGreaterThan(0)
+        expect(tabs).toMatchJsonSchema('tabs')
+
+        done()
+      })
+    })
+
+    it('searches TABs with request options', (done) => {
+      let query = completeAdvanceSearchQuery()
+      let requestOptions = {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
+      }
+      ugs.advanceSearch(query, (error, tabs, response, body) => {
         expect(error).toBeNull()
 
         expect(tabs.length).toBeGreaterThan(0)
