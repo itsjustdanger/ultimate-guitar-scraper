@@ -1,3 +1,12 @@
+#### 0.5.0 (2017-10-23)
+
+- rename `search` for `advanceSearch`
+- create `search` that takes
+  - query `String`
+  - page `Number`
+  - type `Array` of TAB type
+
+
 #### 0.4.0 (2017-10-23)
 
 **Requires nodejs `>= 6.5`**
