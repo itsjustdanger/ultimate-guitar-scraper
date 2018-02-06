@@ -11,13 +11,13 @@
     "type": {
       "type": "string",
       "enum": [
-        "Video",
-        "Tabs",
+        "Video Tab",
+        "Tab",
         "Chords",
-        "Bass Tabs",
-        "Pro",
-        "Power",
-        "Drum Tabs",
+        "Bass Tab",
+        "Guitar Pro Tab",
+        "Power Tab",
+        "Drum Tab",
         "Ukulele Chords"
       ]
     },
