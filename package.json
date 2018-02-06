@@ -26,6 +26,7 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "jasmine": "^2.6.0",
+    "json5": "^0.5.1",
     "request": "^2.81.0"
   },
   "devDependencies": {
