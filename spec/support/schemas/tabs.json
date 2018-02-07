@@ -36,7 +36,7 @@
     },
     "additionalProperties": false,
     "required": [
-      "artist", "name", "type", "url"
+      "artist", "name", "type", "rating", "numberRates", "url"
     ]
   }
 }
