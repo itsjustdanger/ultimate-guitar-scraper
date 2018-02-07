@@ -2,7 +2,7 @@
 const request = require('request')
 const ugs = require('../lib/index')
 const TYPES_WITH_URL = [
-  'guitar pro tabs', 'video lessons', 'power tabs'
+  'Guitar Pro Tab', 'Video Tab', 'Power Tab'
 ]
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
@@ -31,11 +31,19 @@ function autocompleteQuery () {
 function completeSearchQuery () {
   return {
     query: 'Little Black Submarines',
-    type: ['video lessons', 'tabs', 'chords', 'bass tabs', 'guitar pro tabs', 'power tabs', 'drum tabs', 'ukulele chords'],
+    type: [
+      'Video Tab',
+      'Tab',
+      'Chords',
+      'Bass Tab',
+      'Guitar Pro Tab',
+      'Power Tab',
+      'Drum Tab',
+      'Ukulele Chords'
+    ],
     page: 1
   }
 }
-
 
 describe('ultimate-guitar-scraper', () => {
   describe('search', () => {
@@ -75,10 +83,9 @@ describe('ultimate-guitar-scraper', () => {
       const tabType = type
       const tabUrl = tabUrlByType[type]
 
-      it('get the TAB', (done) => {
+      it('returns the TAB', (done) => {
         ugs.get(tabUrl, (error, tab) => {
           expect(error).toBeNull()
-
           expect(tab).toMatchJsonSchema('tab')
           expect(tab.type).toEqual(tabType)
 
@@ -96,7 +103,7 @@ describe('ultimate-guitar-scraper', () => {
         })
       })
 
-      it('get the TAB with request options', (done) => {
+      it('returns the TAB with request options', (done) => {
         let requestOptions = {
           headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' }
         }
