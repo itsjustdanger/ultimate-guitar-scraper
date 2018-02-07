@@ -13,14 +13,14 @@
       "type": {
         "type": "string",
         "enum": [
-          "video lessons",
-          "tabs",
-          "chords",
-          "bass tabs",
-          "guitar pro tabs",
-          "power tabs",
-          "drum tabs",
-          "ukulele chords"
+          "Video Tab",
+          "Tab",
+          "Chords",
+          "Bass Tab",
+          "Guitar Pro Tab",
+          "Power Tab",
+          "Drum Tab",
+          "Ukulele Chords"
         ]
       },
       "rating": {
@@ -29,14 +29,6 @@
       "numberRates": {
         "type": "integer"
       },
-      "difficulty": {
-        "type": "string",
-        "enum": [
-          "novice",
-          "intermediate",
-          "advanced"
-        ]
-      },
       "url": {
         "type": "string",
         "format": "uri"
@@ -44,7 +36,7 @@
     },
     "additionalProperties": false,
     "required": [
-      "artist", "name", "type", "url"
+      "artist", "name", "type", "rating", "numberRates", "url"
     ]
   }
 }
