@@ -1,3 +1,22 @@
+#### 1.0.0 (2018-02-07)
+
+- remove `advanceSearch`
+- rename TAB types:
+  - `'video lessons'` -> `'Video Tab'`
+  - `'tabs'` -> `'Tab'`
+  - `'chords'` -> `'Chords'`
+  - `'bass tabs'` -> `'Bass Tab'`
+  - `'guitar pro tabs'` -> `'Guitar Pro Tab'`
+  - `'power tabs'` -> `'Power Tab'`
+  - `'drum tabs'` -> `'Drum Tab'`
+  - `'ukulele chords'` -> `'Ukulele Chords'`
+- `tab` content for types `'Tabs'`, `'Chords'`, `'Ukulele Chords'`, `'Drum Tab'`, `'Bass Tab'` changed from `{ text: string, html: string }` to `{ text: string }`.
+- JSON schema `tab.json`:
+  - add required properties `rating`, `numberRates`, `content`
+- JSON schema `tabs.json`:
+  - remove property `difficulty`
+  - required properties `rating`, `numberRates`
+
 #### 0.5.0 (2017-12-18)
 
 - rename `search` for `advanceSearch`
