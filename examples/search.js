@@ -3,7 +3,7 @@ const ugs = require('../lib/index')
 ugs.search({
   query: 'Wish You Were Here',
   page: 1,
-  type: ['tabs', 'chords', 'guitar pro tabs']
+  type: ['Tab', 'Chords', 'Guitar Pro Tab']
 }, (error, tabs) => {
   if (error) {
     console.log(error)
