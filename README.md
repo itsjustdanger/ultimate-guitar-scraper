@@ -11,22 +11,24 @@
 
 The scraper allows you to:
 - Search TAB by keyword.
-- Search TAB by song name and band name.
 - Get TAB from its url.
 - Get suggestions for artist or album.
 
-## requirements
+## Requirements
 
 - nodejs `>= 6.5`
 - npm
 
 
-## installation
+## Installation
 
-`npm i ultimate-guitar-scraper --save`
+Using npm:
 
+```shell
+npm i ultimate-guitar-scraper --save
+```
 
-## usage
+## Usage
 
 ### `search(query, callback [, requestOptions])`
 
@@ -38,17 +40,17 @@ Type: `Object`
 |----------|-----------------|---------|----------------------|
 | query    | string          | yes     |                      |
 | page     | number          | no      | `1`                  |
-| type     | string or array | no      | `['tabs', 'chords']` |
+| type     | string or array | no      | `['Tab', 'Chords']` |
 
 Available TAB types:
-- `'video lessons'`
-- `'tabs'`
-- `'chords'`
-- `'bass tabs'`
-- `'guitar pro tabs'`
-- `'power tabs'`
-- `'drum tabs'`
-- `'ukulele chords'`
+- `'Video Tab'`
+- `'Tab'`
+- `'Chords'`
+- `'Bass Tab'`
+- `'Guitar Pro Tab'`
+- `'Power Tab'`
+- `'Drum Tab'`
+- `'Ukulele Chords'`
 
 #### callback
 
@@ -67,7 +69,7 @@ Type: `Object`
 Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
 
 
-### examples
+### Examples
 
 Basic usage.
 
@@ -77,7 +79,7 @@ const ugs = require('ultimate-guitar-scraper')
 ugs.search({
   query: 'Wish You Were Here',
   page: 1,
-  type: ['tabs', 'chords', 'guitar pro tabs']
+  type: ['Tab', 'Chords', 'Guitar Pro Tab']
 }, (error, tabs) => {
   if (error) {
     console.log(error)
@@ -114,7 +116,7 @@ var options = {
 ugs.search(query, callback, options)
 ```
 
-### tabs
+### Tabs
 
 Matches JSON schemas [tabs.json](spec/support/schemas/tabs.json).
 
@@ -123,127 +125,16 @@ Example:
 ```js
 [
   {
-    artist: 'Pink Floyd',
-    name: 'Wish You Were Here Live',
-    difficulty: 'intermediate',
-    rating: 5,
-    numberRates: 2,
-    type: 'tab',
-    url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
+    artist: 'Incubus',
+    name: 'Wish You Were Here',
+    url: 'https://tabs.ultimate-guitar.com/tab/incubus/wish_you_were_here_tabs_34713',
+    rating: 3.8,
+    numberRates: 5,
+    type: 'Tab'
   },
   /* ... */
 ]
 ```
-
-### `advanceSearch(query, callback [, requestOptions])`
-
-#### query
-
-Type: `Object`
-
-| Name     | Type            | Require | Default              |
-|----------|-----------------|---------|----------------------|
-| bandName | string          | yes     |                      |
-| songName | string          | no      |                      |
-| page     | number          | no      | `1`                  |
-| type     | string or array | no      | `['tabs', 'chords']` |
-
-Available TAB types:
-- `'video lessons'`
-- `'tabs'`
-- `'chords'`
-- `'bass tabs'`
-- `'guitar pro tabs'`
-- `'power tabs'`
-- `'drum tabs'`
-- `'ukulele chords'`
-
-#### callback
-
-Type: `Function (error, tabs, requestResponse, requestBody)`
-
-- **error**: Error object. `null` if no error.
-- **tabs**: an array of TAB (see TAB structure below) `null` if error.
-- **requestResponse**: the original response returned by [request](https://www.npmjs.com/package/request).
-- **requestBody**: the original body returned by [request](https://www.npmjs.com/package/request).
-
-
-#### requestOptions
-
-Type: `Object`
-
-Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
-
-
-### examples
-
-Basic usage.
-
-```js
-const ugs = require('ultimate-guitar-scraper')
-
-ugs.advanceSearch({
-  bandName: 'Pink Floyd',
-  songName: 'Wish You Were Here',
-  page: 1,
-  type: ['tabs', 'chords', 'guitar pro tabs']
-}, (error, tabs) => {
-  if (error) {
-    console.log(error)
-  } else {
-    console.log(tabs)
-  }
-})
-```
-
-Using [request](https://www.npmjs.com/package/request) options to pass a custom header.
-
-```js
-const ugs = require('ultimate-guitar-scraper')
-
-var query = {
-  bandName: 'Half Moon Run'
-}
-
-function callback (error, tabs, response, body) {
-  if (error) {
-    console.log(error)
-  } else {
-    console.log(tabs)
-    console.log('Utlimate Guitar server: ' + response.headers['server'])
-  }
-}
-
-var options = {
-  headers: {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'
-  }
-}
-
-ugs.advanceSearch(query, callback, options)
-```
-
-### tabs
-
-Matches JSON schemas [tabs.json](spec/support/schemas/tabs.json).
-
-Example:
-
-```js
-[
-  {
-    artist: 'Pink Floyd',
-    name: 'Wish You Were Here Live',
-    difficulty: 'intermediate',
-    rating: 5,
-    numberRates: 2,
-    type: 'tab',
-    url: 'http://tabs.ultimate-guitar.com/p/pink_floyd/wish_you_were_here_live_tab.htm'
-  },
-  /* ... */
-]
-```
-
 
 ### `get(tabUrl, callback [, requestOptions])`
 
@@ -268,7 +159,7 @@ Type: `Object`
 
 Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
 
-#### example
+#### Example
 
 Basic usage.
 
@@ -285,9 +176,26 @@ ugs.get(tabUrl, (error, tab) => {
 })
 ```
 
-#### tab
+#### Tab
 
 Matches JSON schemas [tab.json](spec/support/schemas/tab.json).
+
+Example:
+
+```js
+{
+  artist: 'Nirvana',
+  name: 'Smells Like Teen Spirit',
+  url: 'https://tabs.ultimate-guitar.com/tab/nirvana/smells_like_teen_spirit_chords_1197271',
+  rating: 4.32643,
+  numberRates: 35,
+  type: 'Chords',
+  difficulty: 'intermediate',
+  content: {
+    text: '[Intro]\n\n[ch]Fsus2[/ch]  [ch]Bbsus2[/ch]  [ch]Ab[/ch]  [ch]Db[/ch] (x4)\n\n\n[Verse Intro] ...'
+  }
+}
+```
 
 
 ### `autocomplete(query, callback [, requestOptions])`
@@ -313,7 +221,7 @@ Type: `Object`
 Options of the HTTP request, made with package [request](https://www.npmjs.com/package/request).
 
 
-### example
+### Example
 
 ```js
 const ugs = require('ultimate-guitar-scraper')
@@ -328,7 +236,7 @@ ugs.autocomplete(query, (error, suggestions) => {
 })
 ```
 
-### suggestions
+### Suggestions
 
 Matches JSON schemas [suggestions.json](spec/support/schemas/suggestions.json).
 
@@ -350,7 +258,7 @@ Example:
 ]
 ```
 
-## test
+## Test
 
 Feature tests are run _daily_, thank to Travis CI new feature [CRON Jobs](https://docs.travis-ci.com/user/cron-jobs/). This way we know if the scraper is ever broken.
 
@@ -361,11 +269,11 @@ npm test
 ```
 
 
-## contributing
+## Contributing
 
 Contribution is welcome! Open an issue first.
 
 
-## license
+## License
 
 MIT.
