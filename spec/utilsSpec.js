@@ -27,14 +27,14 @@ describe('utils', () => {
       let query = {
         query: 'Little Black Submarines',
         type: [
-          'Video Tab',
+          'Video',
           'Tab',
           'Chords',
-          'Bass Tab',
-          'Guitar Pro Tab',
-          'Power Tab',
-          'Drum Tab',
-          'Ukulele Chords'
+          'Bass',
+          'Guitar Pro',
+          'Power',
+          'Drums',
+          'Ukulele'
         ],
         page: 1
       }
