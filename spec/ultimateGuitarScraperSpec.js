@@ -2,20 +2,20 @@
 const request = require('request')
 const ugs = require('../lib/index')
 const TYPES_WITH_URL = [
-  'Guitar Pro Tab', 'Video Tab', 'Power Tab'
+  'Guitar Pro', 'Video', 'Power'
 ]
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000
 
 const tabUrlByType = {
-  'Video Tab': 'https://tabs.ultimate-guitar.com/tab/nirvana/smells_like_teen_spirit_video_1418317',
+  'Video': 'https://tabs.ultimate-guitar.com/tab/nirvana/smells_like_teen_spirit_video_1418317',
   'Tab': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_tab.htm',
   'Chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_crd.htm',
-  'Bass Tab': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_btab.htm',
-  'Guitar Pro Tab': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_guitar_pro.htm',
-  'Power Tab': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm',
-  'Drum Tab': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_drum_tab.htm',
-  'Ukulele Chords': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ukulele_crd.htm'
+  'Bass': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver3_btab.htm',
+  'Guitar Pro': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ver2_guitar_pro.htm',
+  'Power': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_power_tab.htm',
+  'Drums': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_drum_tab.htm',
+  'Ukulele': 'https://tabs.ultimate-guitar.com/n/nirvana/smells_like_teen_spirit_ukulele_crd.htm'
 }
 
 function basicSearchQuery () {
@@ -32,14 +32,14 @@ function completeSearchQuery () {
   return {
     query: 'Little Black Submarines',
     type: [
-      'Video Tab',
+      'Video',
       'Tab',
       'Chords',
-      'Bass Tab',
-      'Guitar Pro Tab',
-      'Power Tab',
-      'Drum Tab',
-      'Ukulele Chords'
+      'Bass',
+      'Guitar Pro',
+      'Power',
+      'Drums',
+      'Ukulele'
     ],
     page: 1
   }
@@ -79,7 +79,7 @@ describe('ultimate-guitar-scraper', () => {
   })
 
   Object.keys(tabUrlByType).forEach((type) => {
-    describe('get', () => {
+    describe(`get TAB type ${type}`, () => {
       const tabType = type
       const tabUrl = tabUrlByType[type]
 

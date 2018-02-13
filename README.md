@@ -43,14 +43,14 @@ Type: `Object`
 | type     | string or array | no      | `['Tab', 'Chords']` |
 
 Available TAB types:
-- `'Video Tab'`
+- `'Video'`
 - `'Tab'`
 - `'Chords'`
-- `'Bass Tab'`
-- `'Guitar Pro Tab'`
-- `'Power Tab'`
-- `'Drum Tab'`
-- `'Ukulele Chords'`
+- `'Bass'`
+- `'Guitar Pro'`
+- `'Power'`
+- `'Drums'`
+- `'Ukulele'`
 
 #### callback
 
@@ -79,7 +79,7 @@ const ugs = require('ultimate-guitar-scraper')
 ugs.search({
   query: 'Wish You Were Here',
   page: 1,
-  type: ['Tab', 'Chords', 'Guitar Pro Tab']
+  type: ['Tab', 'Chords', 'Guitar Pro']
 }, (error, tabs) => {
   if (error) {
     console.log(error)

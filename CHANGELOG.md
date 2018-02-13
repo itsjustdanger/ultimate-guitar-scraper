@@ -1,3 +1,15 @@
+#### 1.0.1 (2018-02-12)
+
+- Fix scraper and
+- Ultimate Guitar change their tab type:
+  - `'Video Tab'` -> `'Video'`
+  - `'Bass Tab'` -> `'Bass'`
+  - `'Guitar Pro Tab'` -> `'Guitar Pro'`
+  - `'Power Tab'` -> `'Power'`
+  - `'Drum Tab'` -> `'Drums'`
+  - `'Ukulele Chords'` -> `'Ukulele'`
+
+
 #### 1.0.0 (2018-02-07)
 
 - remove `advanceSearch`
